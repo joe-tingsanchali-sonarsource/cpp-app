@@ -29,7 +29,8 @@ int main()
     std::cout << "Random'ish id = " << id << std::endl;
 
     // Hardcoded IP issue
-    char * host = "10.10.0.1"; // Sensitive
+    char host[10];
+    strcpy(host, "10.10.0.1"); // Sensitive
     std::cout << "Hardcoded Server IP = " << id << std::endl;
 
     return 0;
