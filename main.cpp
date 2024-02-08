@@ -8,6 +8,7 @@
 int generateRandomId() 
 {
   int random_int = std::rand(); // Should use functions which rely on a strong random number generator, not a pseudo-random number generator becasuse it can be predicted
+  return random_int;
 }
 
 void badInputFunction(){
