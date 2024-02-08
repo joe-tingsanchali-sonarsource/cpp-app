@@ -11,9 +11,9 @@ int generateRandomId()
   return random_int;
 }
 
-void badInputFunction(){
-    char str[20];
-    gets(str); // Noncompliant; `str` buffer size is not checked and it is vulnerable to overflows
+void bufferOverflow(char * input){
+    char buffer[20];
+    strcpy(buffer, input); // Noncompliant; `input` length is not checked and it may overflow `buffer`
 }
 
 int main()
