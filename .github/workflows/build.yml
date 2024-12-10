@@ -1,13 +1,14 @@
-name: SonarCloud
+name: C/C++ CI
+
 on:
   push:
-    branches:
-      - main
+    branches: ["main", "feature/*"]
   pull_request:
-    types: [opened, synchronize, reopened]
+    branches: ["main"]
+
 jobs:
   build:
-    name: Build and analyze
+    name: Build
     runs-on: ubuntu-latest
     permissions: read-all
     env:
@@ -15,10 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Install sonar-scanner and build-wrapper
-        uses: SonarSource/sonarcloud-github-c-cpp@v2
-      - name: Run build-wrapper
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Download and install the build wrapper, build the project
         run: |
           mkdir $HOME/.sonar
           curl -sSLo $HOME/.sonar/build-wrapper-linux-x86.zip ${{ secrets.SONAR_HOST_URL }}/static/cpp/build-wrapper-linux-x86.zip
@@ -39,5 +38,5 @@ jobs:
         run: |
           sonar-scanner -Dsonar.cfamily.compile-commands="${{env.BUILD_WRAPPER_OUT_DIR}}/compile_commands.json"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
