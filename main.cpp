@@ -11,3 +11,7 @@ int main()
     std::cout << avg;
 }
 
+void f(std::string_view sv) {
+    std::string s(sv.data()); // Noncompliant
+    std::string_view sv2(sv.data()); // Noncompliant
+}
